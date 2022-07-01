@@ -6,11 +6,11 @@ import br.com.forum.forumapi.controller.response.TopicoResponse
 import br.com.forum.forumapi.exception.NotFoundException
 import br.com.forum.forumapi.mapper.TopicoFormMapper
 import br.com.forum.forumapi.mapper.TopicoViewMapper
-import br.com.forum.forumapi.model.Topico
 import br.com.forum.forumapi.repository.TopicoRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import java.util.stream.Collectors
-import kotlin.collections.ArrayList
+
 
 @Service
 class TopicoService(
@@ -20,16 +20,15 @@ class TopicoService(
     private val notFoundMessage: String = "Tópico não encontrado!"
     ) {
 
-    fun listar(nomeCurso: String?): List<TopicoResponse>{
+    fun listar(nomeCurso: String?,
+               paginacao: Pageable
+    ): Page<TopicoResponse> {
         val topicos = if (nomeCurso == null) {
-            topicoRepository.findAll();
+            topicoRepository.findAll(paginacao);
         }else {
-            topicoRepository.findByCursoNome(nomeCurso)
+            topicoRepository.findByCursoNome(nomeCurso, paginacao)
         }
-
-        return topicos.stream().map {
-                t -> topicoResponseMapper.map(t)
-        }.collect(Collectors.toList())
+        return topicos.map { t -> topicoResponseMapper.map(t) }
     }
 
     fun listarPorId(id: Long): TopicoResponse {
@@ -54,3 +53,6 @@ class TopicoService(
        topicoRepository.deleteById(id)
     }
 }
+
+
+
