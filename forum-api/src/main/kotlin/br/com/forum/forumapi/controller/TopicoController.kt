@@ -1,6 +1,7 @@
 package br.com.forum.forumapi.controller
 import br.com.forum.forumapi.controller.form.AtualizacaoTopicoForm
 import br.com.forum.forumapi.controller.form.NovoTopicoForm
+import br.com.forum.forumapi.controller.response.TopicoPorCategoria
 import br.com.forum.forumapi.controller.response.TopicoResponse
 import br.com.forum.forumapi.service.TopicoService
 import org.springframework.cache.annotation.CacheEvict
@@ -57,6 +58,11 @@ class TopicoController(private val service: TopicoService) {
     @CacheEvict(value = ["topico"], allEntries = true)
     fun deleteTopico(@PathVariable id: Long){
         service.deletar(id)
+    }
+
+    @GetMapping("/relatorio")
+    fun relatorio(): List<TopicoPorCategoria>{
+        return service.relatorio()
     }
 
 }
