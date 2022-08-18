@@ -1,8 +1,9 @@
-CREATE TABLE usuario(
-    id SERIAL NOT NULL,
-    nome VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    primary key(id)
+create table usuario
+(
+    id    bigint      not null auto_increment,
+    nome  varchar(50) not null,
+    email varchar(50) not null,
+    primary key (id)
 );
 
 insert into usuario values(1, 'ana', 'ana@gmail.com');

@@ -1,8 +1,10 @@
-CREATE TABLE role(
-    id SERIAL,
-    nome VARCHAR(50),
-    PRIMARY KEY(id)
+CREATE TABLE role
+(
+    `id`   BIGINT      NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id`)
 );
 
 
-INSERT INTO role (id, nome) VALUES (1, 'LEITURA_ESCRITA');
+INSERT INTO `role`(`id`, `nome`)
+values (1, 'LEITURA_ESCRITA');

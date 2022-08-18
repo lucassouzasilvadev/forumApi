@@ -1,15 +1,12 @@
 spring:
   datasource:
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/forumApi
-    username: postgres
-    password: admin
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/forumApi
+    username: root
+    password: root
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
-        ddl-auto: create
         show_sql: true
         format_sql: true
 jwt:

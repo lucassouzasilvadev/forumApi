@@ -11,6 +11,7 @@ import br.com.forum.forumapi.repository.TopicoRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 
 @Service
@@ -47,6 +48,7 @@ class TopicoService(
         val topico = topicoRepository.findById(form.id).orElseThrow { NotFoundException(notFoundMessage) }
         topico.titulo = form.titulo
         topico.mensagem = form.mensagem
+        topico.dataAlteracao = LocalDate.now()
         return topicoResponseMapper.map(topico)
     }
 

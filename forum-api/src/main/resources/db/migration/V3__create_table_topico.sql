@@ -1,13 +1,14 @@
-CREATE TABLE topico(
-    id SERIAL NOT NULL,
-    titulo VARCHAR(50) NOT NULL,
-    mensagem VARCHAR(300) NOT NULL,
-    data_criacao TIMESTAMP NOT NULL,
-    status VARCHAR(30) NOT NULL,
-    curso_id BIGINT NOT NULL,
-    autor_id BIGINT NOT NULL,
-    primary key(id),
-    FOREIGN KEY(curso_id) REFERENCES curso(id),
-    FOREIGN KEY(autor_id) REFERENCES usuario(id)
+create table topico
+(
+    id           bigint       not null auto_increment,
+    titulo       varchar(50)  not null,
+    mensagem     varchar(300) not null,
+    data_criacao datetime     not null,
+    status       varchar(20)  not null,
+    curso_id     bigint       not null,
+    autor_id     bigint       not null,
+    primary key (id),
+    foreign key (curso_id) references curso (id),
+    foreign key (autor_id) references usuario (id)
 );
 

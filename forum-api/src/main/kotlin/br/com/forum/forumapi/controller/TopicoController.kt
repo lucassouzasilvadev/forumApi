@@ -4,6 +4,7 @@ import br.com.forum.forumapi.controller.form.NovoTopicoForm
 import br.com.forum.forumapi.controller.response.TopicoPorCategoria
 import br.com.forum.forumapi.controller.response.TopicoResponse
 import br.com.forum.forumapi.service.TopicoService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/topicos")
 class TopicoController(private val service: TopicoService) {
 
