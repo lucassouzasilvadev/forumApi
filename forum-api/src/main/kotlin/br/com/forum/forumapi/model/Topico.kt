@@ -1,5 +1,6 @@
 package br.com.forum.forumapi.model
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*

@@ -5,8 +5,6 @@ import br.com.forum.forumapi.controller.response.TopicoPorCategoria
 import br.com.forum.forumapi.controller.response.TopicoResponse
 import br.com.forum.forumapi.service.TopicoService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -24,7 +22,6 @@ import javax.validation.Valid
 class TopicoController(private val service: TopicoService) {
 
     @GetMapping
-    @Cacheable("topico")
     fun listarTopicos(
         @RequestParam(required = false)nomeCurso: String?,
         @PageableDefault(size = 5, sort = ["dataCriacao"], direction = Sort.Direction.DESC) paginacao: Pageable
@@ -39,7 +36,6 @@ class TopicoController(private val service: TopicoService) {
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = ["topico"], allEntries = true)
     fun cadastrar(@RequestBody @Valid form: NovoTopicoForm, uriBuilder: UriComponentsBuilder): ResponseEntity<TopicoResponse> {
         val topicoResponse = service.cadastrar(form)
         val uri = uriBuilder.path("/topicos/${topicoResponse.id}").build().toUri()
@@ -48,7 +44,6 @@ class TopicoController(private val service: TopicoService) {
 
     @PutMapping
     @Transactional
-    @CacheEvict(value = ["topico"], allEntries = true)
     fun atualizar(@RequestBody @Valid form: AtualizacaoTopicoForm): ResponseEntity<TopicoResponse>{
         val topicoView = service.atualizar(form)
         return ResponseEntity.ok(topicoView)
@@ -57,7 +52,6 @@ class TopicoController(private val service: TopicoService) {
     @DeleteMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = ["topico"], allEntries = true)
     fun deleteTopico(@PathVariable id: Long){
         service.deletar(id)
     }

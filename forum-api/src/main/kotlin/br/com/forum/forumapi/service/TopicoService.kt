@@ -8,6 +8,8 @@ import br.com.forum.forumapi.exception.NotFoundException
 import br.com.forum.forumapi.mapper.TopicoFormMapper
 import br.com.forum.forumapi.mapper.TopicoViewMapper
 import br.com.forum.forumapi.repository.TopicoRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -22,6 +24,7 @@ class TopicoService(
     private val notFoundMessage: String = "Tópico não encontrado!"
     ) {
 
+    @Cacheable(cacheNames = ["topico"], key = "#root.method.name")
     fun listar(nomeCurso: String?,
                paginacao: Pageable
     ): Page<TopicoResponse> {
@@ -38,12 +41,14 @@ class TopicoService(
        return  topicoResponseMapper.map(topico)
     }
 
+    @CacheEvict(cacheNames = ["topico"], allEntries = true)
     fun cadastrar(form: NovoTopicoForm): TopicoResponse {
         val topico = topicoFormMapper.map(form)
         topicoRepository.save(topico)
         return topicoResponseMapper.map(topico)
     }
 
+    @CacheEvict(cacheNames = ["topico"], allEntries = true)
     fun atualizar(form: AtualizacaoTopicoForm): TopicoResponse {
         val topico = topicoRepository.findById(form.id).orElseThrow { NotFoundException(notFoundMessage) }
         topico.titulo = form.titulo
@@ -52,6 +57,7 @@ class TopicoService(
         return topicoResponseMapper.map(topico)
     }
 
+    @CacheEvict(cacheNames = ["topico"], allEntries = true)
     fun deletar(id: Long) {
        topicoRepository.deleteById(id)
     }
