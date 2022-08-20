@@ -28,6 +28,7 @@ class SecurityConfiguration(
             authorizeRequests()?.
             antMatchers("/topicos")?.hasAuthority("LEITURA_ESCRITA")?.
             antMatchers("/respostas")?.hasAuthority("LEITURA_ESCRITA")?.
+            antMatchers("/relatorios")?.hasAuthority("ADMIN")?.
             antMatchers("/swagger-ui/*")?.permitAll()?.
             antMatchers("/v3/api-docs/**")?.permitAll()?.
             antMatchers(HttpMethod.POST,"/login")?.permitAll()?.
